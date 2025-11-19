@@ -1,50 +1,89 @@
 // inih-rs/src/lib.rs
 
-// FIX #1: Changed `inih-sys` to `inih_sys` (hyphen to underscore)
-use inih_sys as ffi; 
+// --- We no longer use `inih-sys`, so the `use` is gone ---
 use std::collections::HashMap;
 use std::ffi::{c_char, c_int, c_void, CStr, CString};
 use std::path::Path;
-// FIX #2: Removed the unused `use std::str;` line
 
 #[derive(Debug, PartialEq, Default)]
 pub struct Ini {
     data: HashMap<String, HashMap<String, String>>,
 }
 
+// --- THIS IS THE NEW, PURE-RUST REWRITE ---
 impl Ini {
     pub fn from_file(path: &Path) -> Result<Self, String> {
+        // 1. Create our Rust struct that will hold the data.
         let mut ini = Ini::default();
+
+        // 2. Create a C-style `void*` pointer to our struct.
+        //    We still need this because our `rust_ini_handler` expects it.
         let user_ptr = &mut ini as *mut _ as *mut c_void;
 
-        // --- This is the "unsafe" part ---
-        unsafe {
-            // 1. Create a C-compatible string for the path
-            let path_str = path.to_str().ok_or("Invalid path string")?;
-            let c_path = CString::new(path_str).map_err(|e| e.to_string())?;
+        // --- PURE RUST PARSER ---
+        // 3. Read the entire file into a string.
+        let file_content = std::fs::read_to_string(path)
+            .map_err(|e| format!("File not found or unreadable: {:?}", e))?; // Replicates C error -1
+        
+        let mut current_section = CString::new("").unwrap(); // Default section
+        let mut line_number = 0;
 
-            // 2. Call the C function from our -sys crate
-            let result_code = ffi::ini_parse(
-                c_path.as_ptr(),        // <-- The C-style path
-                Some(rust_ini_handler), // <-- Our Rust callback function
-                user_ptr                // <-- The pointer to our 'ini' struct
-            );
+        // 4. Process the file line by line
+        for line in file_content.lines() {
+            line_number += 1;
+            let line = line.trim();
 
-            // 3. Convert C error code to Rust Result
-            if result_code == 0 {
-                Ok(ini) // Success!
-            } else if result_code == -1 {
-                Err(format!("File not found: {:?}", path))
-            } else {
-                Err(format!("Error parsing file on line {}", result_code))
+            // 5. Skip empty lines and comments
+            if line.is_empty() || line.starts_with(';') || line.starts_with('#') {
+                continue;
             }
+
+            // 6. Check for [section]
+            if line.starts_with('[') && line.ends_with(']') {
+                // Get the section name, trim it, and make a CString
+                let section_name = line[1..line.len() - 1].trim();
+                current_section = CString::new(section_name)
+                    .map_err(|e| format!("Error on line {}: Invalid section name. {}", line_number, e))?;
+                continue;
+            }
+
+            // 7. Check for key = value
+            if let Some((key, value)) = line.split_once('=') {
+                let key = key.trim();
+                let value = value.trim();
+
+                // Create CStrings to pass to our handler
+                let c_key = CString::new(key)
+                    .map_err(|e| format!("Error on line {}: Invalid key. {}", line_number, e))?;
+                let c_value = CString::new(value)
+                    .map_err(|e| format!("Error on line {}: Invalid value. {}", line_number, e))?;
+
+                // 8. Call our *own* handler function
+                //    This is the "hot-swap"
+                let result = rust_ini_handler(
+                    user_ptr,
+                    current_section.as_ptr(),
+                    c_key.as_ptr(),
+                    c_value.as_ptr()
+                );
+
+                // Check the handler's result code
+                if result != 1 {
+                    // This error comes from our handler (or would, if it ever returned != 1)
+                    return Err(format!("Error parsing file on line {}", line_number)); // Replicates C error
+                }
+            }
+            // If the line is not a section, comment, or key/value,
+            // the `inih` C parser just ignores it. So do we.
         }
-        // --- End of "unsafe" block ---
+
+        // 9. Success!
+        Ok(ini)
+        // --- END OF PURE RUST PARSER ---
     }
 }
 
-// This is our Rust function that C will call
-// FIX #3: Changed `#[no_mangle]` to `#[unsafe(no_mangle)]`
+// --- THIS HANDLER IS STILL USED BY OUR RUST PARSER ---
 #[unsafe(no_mangle)]
 extern "C" fn rust_ini_handler(
     user_data: *mut c_void,
@@ -68,7 +107,7 @@ extern "C" fn rust_ini_handler(
     1
 }
 
-// --- This is our test ---
+// --- OUR TEST REMAINS UNCHANGED (AND SHOULD STILL PASS) ---
 #[cfg(test)]
 mod tests {
     use super::*;
