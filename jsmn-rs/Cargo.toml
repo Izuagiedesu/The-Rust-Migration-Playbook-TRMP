@@ -5,4 +5,3 @@ edition = "2024"
 
 [dependencies]
 # Link to our local bridge
-jsmn-sys = { path = "../jsmn-sys" }
