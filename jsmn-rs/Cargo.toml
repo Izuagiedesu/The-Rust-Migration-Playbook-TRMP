@@ -1,0 +1,8 @@
+[package]
+name = "jsmn-rs"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+# Link to our local bridge
+jsmn-sys = { path = "../jsmn-sys" }
