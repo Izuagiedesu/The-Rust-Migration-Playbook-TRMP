@@ -1,0 +1,14 @@
+/workspaces/The-Rust-Migration-Playbook-TRMP/jsmn-rs/target/debug/deps/serde-56684be1afeb9f62.d: /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /workspaces/The-Rust-Migration-Playbook-TRMP/jsmn-rs/target/debug/build/serde-08f812c234a498cb/out/private.rs
+
+/workspaces/The-Rust-Migration-Playbook-TRMP/jsmn-rs/target/debug/deps/libserde-56684be1afeb9f62.rlib: /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /workspaces/The-Rust-Migration-Playbook-TRMP/jsmn-rs/target/debug/build/serde-08f812c234a498cb/out/private.rs
+
+/workspaces/The-Rust-Migration-Playbook-TRMP/jsmn-rs/target/debug/deps/libserde-56684be1afeb9f62.rmeta: /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /workspaces/The-Rust-Migration-Playbook-TRMP/jsmn-rs/target/debug/build/serde-08f812c234a498cb/out/private.rs
+
+/home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs:
+/home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs:
+/home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs:
+/home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs:
+/home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs:
+/workspaces/The-Rust-Migration-Playbook-TRMP/jsmn-rs/target/debug/build/serde-08f812c234a498cb/out/private.rs:
+
+# env-dep:OUT_DIR=/workspaces/The-Rust-Migration-Playbook-TRMP/jsmn-rs/target/debug/build/serde-08f812c234a498cb/out

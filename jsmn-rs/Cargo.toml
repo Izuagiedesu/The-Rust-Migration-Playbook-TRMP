@@ -5,3 +5,10 @@ edition = "2024"
 
 [dependencies]
 # Link to our local bridge
+
+[dev-dependencies]
+criterion = "0.5"
+
+[[bench]]
+name = "json_benchmark"
+harness = false

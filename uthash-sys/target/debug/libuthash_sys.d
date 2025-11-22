@@ -1,0 +1,1 @@
+/workspaces/The-Rust-Migration-Playbook-TRMP/uthash-sys/target/debug/libuthash_sys.rlib: /workspaces/The-Rust-Migration-Playbook-TRMP/uthash-sys/build.rs /workspaces/The-Rust-Migration-Playbook-TRMP/uthash-sys/src/lib.rs /workspaces/The-Rust-Migration-Playbook-TRMP/uthash-sys/target/debug/build/uthash-sys-d90bcb914a3f534b/out/bindings.rs
